@@ -54,10 +54,6 @@ userSchema.methods.generateAuthToken = function () {
   });
 };
 
-// Verify JWT token
-userSchema.methods.verifyAuthToken = function (token) {
-  return jwt.verify(token, process.env.JWT_SECRET);
-};
 
 const userModel = new mongoose.model('User', userSchema);
 

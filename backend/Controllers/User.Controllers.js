@@ -49,7 +49,7 @@ export const loginUser = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: 'Invalid email and password' });
     }
-    
+
     // Compare password for authentication
     const comparePassword = await user.comparePassword(password);
 
@@ -60,6 +60,15 @@ export const loginUser = async (req, res) => {
     // Generate JWT token for authentication
     const token = user.generateAuthToken();
     res.status(200).json({ user, token });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+//  user profile route
+export const getUserProfile = async (req, res) => {
+  try {
+    res.status(200).json(req.user);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
