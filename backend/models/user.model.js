@@ -23,7 +23,8 @@ const userSchema = mongoose.Schema(
     password: {
       type: String,
       required: true,
-      minlength: [6, 'password must be at least  6 characters long']
+      minlength: [6, 'password must be at least  6 characters long'],
+      select: false
     },
     created_at: {
       type: Date,
@@ -42,7 +43,7 @@ userSchema.statics.hashPassword = async function (password) {
 };
 
 // Compare password for authentication
-userSchema.statics.comparePassword = async function (password) {
+userSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
