@@ -17,7 +17,11 @@ export const registerUser = async (req, res) => {
       email,
       password
     } = req.body;
-
+    // Check if user already exists
+    const isUserExist = await userModel.findOne({ email });
+    if (isUserExist) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
     // Hash password before saving
     const hashPassword = await userModel.hashPassword(password);
     // Create user
@@ -82,7 +86,7 @@ export const getUserProfile = async (req, res) => {
 // user logout route
 export const logoutUser = async (req, res) => {
   try {
-    // Blacklist token
+    // clear cookie and add token to blacklist
     res.clearCookie('x-auth-token', {
       // httpOnly: true,
       // secure: true,

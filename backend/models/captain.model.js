@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 const captainSchema = mongoose.Schema({
   fullname: {
     firstname: {
@@ -37,7 +38,7 @@ const captainSchema = mongoose.Schema({
   status: {
     type: String,
     enum: ['active', 'inactive'],
-    default: 'active'
+    default: 'inactive'
   },
   vehicle: {
     color: {
@@ -60,8 +61,33 @@ const captainSchema = mongoose.Schema({
       required: true,
       min: [1, 'Capacity must be at least  1']
     }
+  },
+  location: {
+    lat: {
+      type: Number
+    },
+    lng: {
+      type: Number
+    }
   }
 });
+
+// Hash password before saving
+captainSchema.statics.hashPassword = async function (password) {
+  return await bcrypt.hash(password, 10);
+};
+
+// Compare password for authentication
+captainSchema.methods.comparePassword = async function (password) {
+  return await bcrypt.compare(password, this.password);
+};
+
+// Generate JWT token for authentication
+captainSchema.methods.generateAuthToken = function () {
+  return jwt.sign({ _id: this._id }, process.env.JWT_SECRET, {
+    expiresIn: '24h'
+  });
+};
 
 const captainModel = new mongoose.model('Captain', captainSchema);
 

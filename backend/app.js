@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import  UserRouter  from './Routes/User.routes.js';
-import  CaptainRouter  from './Routes/Captain.route.js';
+import  CaptainRouter  from './Routes/Captain.routes.js';
 
 //load environment variables
 dotenv.config();

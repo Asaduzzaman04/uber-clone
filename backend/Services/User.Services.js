@@ -17,6 +17,6 @@ export const createUser = async ({ firstname, lastname, email, password }) => {
     });
     return user;
   } catch (error) {
-   return new Error(error.message);
+    return new Error(error.message);
   }
 };

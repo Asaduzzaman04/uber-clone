@@ -50,10 +50,9 @@ userSchema.methods.comparePassword = async function (password) {
 // Generate JWT token for authentication
 userSchema.methods.generateAuthToken = function () {
   return jwt.sign({ _id: this._id }, process.env.JWT_SECRET, {
-   expiresIn: '24h'
+    expiresIn: '24h'
   });
 };
-
 
 const userModel = new mongoose.model('User', userSchema);
 

@@ -1,0 +1,99 @@
+ captain = [
+  {
+    "fullname": {
+      "firstname": "Rahim",
+      "lastname": "Uddin"
+    },
+    "email": "rahim.uddin@example.com",
+    "password": "hashedpassword123",
+    "socketID": "socket12345",
+    "status": "active",
+    "vehicle": {
+      "color": "Blue",
+      "plateNumber": "DHK-1234",
+      "vehicleType": "car",
+      "capactiy": 4
+    },
+    "location": {
+      "lat": 23.8103,
+      "lng": 90.4125
+    }
+  },
+  {
+    "fullname": {
+      "firstname": "Karim",
+      "lastname": "Ahmed"
+    },
+    "email": "karim.ahmed@example.com",
+    "password": "hashedpassword456",
+    "socketID": "socket67890",
+    "status": "inactive",
+    "vehicle": {
+      "color": "Red",
+      "plateNumber": "CTG-5678",
+      "vehicleType": "motorcycle",
+      "capactiy": 2
+    },
+    "location": {
+      "lat": 22.3569,
+      "lng": 91.7832
+    }
+  },
+  {
+    "fullname": {
+      "firstname": "Mehedi",
+      "lastname": "Hasan"
+    },
+    "email": "mehedi.hasan@example.com",
+    "password": "hashedpassword789",
+    "socketID": "socket24680",
+    "status": "active",
+    "vehicle": {
+      "color": "White",
+      "plateNumber": "SYL-2468",
+      "vehicleType": "cng",
+      "capactiy": 3
+    },
+    "location": {
+      "lat": 24.8949,
+      "lng": 91.8687
+    }
+  }
+]
+
+
+user = [
+  {
+    "fullname": {
+      "firstname": "Arafat",
+      "lastname": "Rahman"
+    },
+    "email": "arafat.rahman@example.com",
+    "password": "hashedpassword123",
+    "socketID": "socket001",
+    "createdAt": "2025-02-06T12:00:00.000Z",
+    "updatedAt": "2025-02-06T12:00:00.000Z"
+  },
+  {
+    "fullname": {
+      "firstname": "Nusrat",
+      "lastname": "Jahan"
+    },
+    "email": "nusrat.jahan@example.com",
+    "password": "hashedpassword456",
+    "socketID": "socket002",
+    "createdAt": "2025-02-06T12:05:00.000Z",
+    "updatedAt": "2025-02-06T12:05:00.000Z"
+  },
+  {
+    "fullname": {
+      "firstname": "Tariq",
+      "lastname": "Hasan"
+    },
+    "email": "tariq.hasan@example.com",
+    "password": "hashedpassword789",
+    "socketID": "socket003",
+    "createdAt": "2025-02-06T12:10:00.000Z",
+    "updatedAt": "2025-02-06T12:10:00.000Z"
+  }
+]
