@@ -18,17 +18,17 @@ const userSchema = mongoose.Schema(
       type: String,
       unique: true,
       required: true,
-      minlength: [3, 'email must be at least  3 characters long']
+      minlength: [3, 'email must be at least  3 characters long'],
+      match: [
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        'Please fill a valid email address'
+      ]
     },
     password: {
       type: String,
       required: true,
       minlength: [6, 'password must be at least  6 characters long'],
       select: false
-    },
-    created_at: {
-      type: Date,
-      default: Date.now
     },
     socketID: {
       type: String
@@ -49,8 +49,8 @@ userSchema.methods.comparePassword = async function (password) {
 
 // Generate JWT token for authentication
 userSchema.methods.generateAuthToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
-    expiresIn: '7d'
+  return jwt.sign({ _id: this._id }, process.env.JWT_SECRET, {
+   expiresIn: '24h'
   });
 };
 

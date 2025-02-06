@@ -1,3 +1,4 @@
+import blackListTokenModel from '../models/blackListToken.model.js';
 import userModel from '../models/user.model.js';
 import { createUser } from '../Services/User.Services.js';
 import { validationResult } from 'express-validator';
@@ -59,6 +60,7 @@ export const loginUser = async (req, res) => {
 
     // Generate JWT token for authentication
     const token = user.generateAuthToken();
+    res.cookie('x-auth-token', token);
     res.status(200).json({ user, token });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -68,8 +70,31 @@ export const loginUser = async (req, res) => {
 //  user profile route
 export const getUserProfile = async (req, res) => {
   try {
+    if (!req.user) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
     res.status(200).json(req.user);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+// user logout route
+export const logoutUser = async (req, res) => {
+  try {
+    // Blacklist token
+    res.clearCookie('x-auth-token', {
+      // httpOnly: true,
+      // secure: true,
+      // sameSite: 'None'
+    });
+    const token =
+      req.cookies?.['x-auth-token'] || req.headers.authorization?.split(' ')[1];
+    await blackListTokenModel.create({ token });
+    return res.status(200).json({ message: 'Logout successful' });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ message: 'Something went wrong', error: error.message });
   }
 };

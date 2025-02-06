@@ -1,13 +1,13 @@
 import express from 'express';
 import { body } from 'express-validator';
-import { registerUser, loginUser, getUserProfile } from '../Controllers/User.Controllers.js';
+import { registerUser, loginUser, getUserProfile, logoutUser } from '../Controllers/User.Controllers.js';
 import { authUser } from '../middlewares/auth.middleware.js';
 
 //register user
-const Router = express.Router();
+const UserRouter = express.Router();
 
 // Register user with server side validation
-Router.post(
+UserRouter.post(
   '/register',
   [
     body('fullname.firstname')
@@ -22,12 +22,14 @@ Router.post(
   registerUser
 );
 // Login user with server side validation
-Router.post('/login', [
+UserRouter.post('/login', [
   body('email').isEmail().withMessage('Please enter a valid email'),
   body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
 ], loginUser);
 
+// Get user profile with authentication middleware 
+UserRouter.get('/profile',authUser,  getUserProfile )
+//user logout route goes here
+UserRouter.get('/logout',authUser , logoutUser)
 
-Router.get('/profile',authUser,  getUserProfile )
-
-export default Router;
+export default UserRouter;
