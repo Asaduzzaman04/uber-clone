@@ -71,8 +71,6 @@ user = [
     "email": "arafat.rahman@example.com",
     "password": "hashedpassword123",
     "socketID": "socket001",
-    "createdAt": "2025-02-06T12:00:00.000Z",
-    "updatedAt": "2025-02-06T12:00:00.000Z"
   },
   {
     "fullname": {
@@ -82,8 +80,7 @@ user = [
     "email": "nusrat.jahan@example.com",
     "password": "hashedpassword456",
     "socketID": "socket002",
-    "createdAt": "2025-02-06T12:05:00.000Z",
-    "updatedAt": "2025-02-06T12:05:00.000Z"
+
   },
   {
     "fullname": {
@@ -93,7 +90,5 @@ user = [
     "email": "tariq.hasan@example.com",
     "password": "hashedpassword789",
     "socketID": "socket003",
-    "createdAt": "2025-02-06T12:10:00.000Z",
-    "updatedAt": "2025-02-06T12:10:00.000Z"
   }
 ]

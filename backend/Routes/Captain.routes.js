@@ -62,7 +62,7 @@ CaptainRouter.post(
       .isIn(['car', 'motorcycle', 'cng'])
       .withMessage('Vehicle Type must be either car, motorcycle, or cng'),
 
-    body('vehicle.capacity')
+    body('vehicle.capactiy')
       .not()
       .isEmpty()
       .withMessage('Capacity is required')
@@ -98,7 +98,7 @@ CaptainRouter.post(
 // Get captain profile with authentication middleware
 CaptainRouter.get('/profile', authCaptain, getCaptainProfile);
 // logout route goes here
-CaptainRouter.post('/logout',authCaptain, logoutCaptain);
+CaptainRouter.get('/logout',authCaptain, logoutCaptain);
 
 //export router to initialize it in the app
 export default CaptainRouter;

@@ -7,7 +7,7 @@ import blackListTokenModel from '../models/blackListToken.model.js';
 export const authCaptain = async (req, res, next) => {
   try {
     const token =
-      req.cookie?.['x-auth-token'] || req.headers?.authorization?.split(' ')[1];
+      req.cookies?.['x-auth-token'] || req.headers?.authorization?.split(' ')[1];
     if (!token) {
       return res
         .status(401)

@@ -28,7 +28,8 @@ UserRouter.post(
 
     body('password')
       .isLength({ min: 6 })
-      .withMessage('Password must be at least 6 characters long')
+      .withMessage('Password must be at least 6 characters long'),
+    body('socketID').not().isEmpty().withMessage('Socket ID is required')
   ],
   registerUser
 );

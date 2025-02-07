@@ -19,7 +19,7 @@ export const authUser = async (req, res, next) => {
   }
   try {
     // Verify JWT token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);z
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     if (!decoded) {
       return res.status(401).json({ message: 'Invalid token' });
     }

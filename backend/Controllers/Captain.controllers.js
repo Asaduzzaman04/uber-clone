@@ -18,7 +18,7 @@ export const registerCaptain = async (req, res) => {
       password,
       socketID,
       status,
-      vehicle: { color, plateNumber, vehicleType, capacity },
+      vehicle: { color, plateNumber, vehicleType, capactiy },
       location
     } = req.body;
 
@@ -40,7 +40,7 @@ export const registerCaptain = async (req, res) => {
       color,
       plateNumber,
       vehicleType,
-      capacity,
+      capactiy,
       location
     });
     //generate token
@@ -56,17 +56,20 @@ export const loginCaptain = async (req, res) => {
   try {
     const { email, password } = req.body;
     //check if captain exists
-    const captain = await captainModel.findOne({ email });
+    const captain = await captainModel.findOne({ email }).select('+password');
     if (!captain) {
       return res.status(404).json({ message: 'Captain not found' });
     }
     //check if password is correct
-    const isMatch = await captainModel.comparePassword(password);
+    const isMatch = await captain.comparePassword(password);
+  
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
     //generate token
     const token = captain.generateAuthToken();
+    //* res.setHeader("Authorization", `Bearer ${token}`); // Send token in header
+
     res.cookie('x-auth-token', token);
     return res.status(200).json({ captain, token });
   } catch (error) {

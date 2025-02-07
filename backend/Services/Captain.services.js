@@ -10,7 +10,7 @@ export const createCaptain = async ({
   color,
   plateNumber,
   vehicleType,
-  capacity,
+  capactiy,
   location
 }) => {
   try {
@@ -22,7 +22,7 @@ export const createCaptain = async ({
       !color ||
       !plateNumber ||
       !vehicleType ||
-      !capacity
+      !capactiy
     ) {
       throw new Error('All fields are required');
     }
@@ -33,7 +33,7 @@ export const createCaptain = async ({
       password,
       socketID,
       status,
-      vehicle: { color, plateNumber, vehicleType, capacity },
+      vehicle: { color, plateNumber, vehicleType, capactiy },
       location
     });
     // Return the captain
