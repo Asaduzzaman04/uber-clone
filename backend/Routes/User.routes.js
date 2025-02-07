@@ -6,7 +6,7 @@ import {
   getUserProfile,
   logoutUser
 } from '../Controllers/User.Controllers.js';
-import { authUser } from '../middlewares/auth.middleware.js';
+import { authUser } from '../middlewares/authUser.middleware.js';
 
 //register user
 const UserRouter = express.Router();
@@ -49,4 +49,5 @@ UserRouter.get('/profile', authUser, getUserProfile);
 //user logout route goes here
 UserRouter.get('/logout', authUser, logoutUser);
 
+//export router to initialize it in the app
 export default UserRouter;

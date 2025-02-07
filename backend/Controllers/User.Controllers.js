@@ -95,7 +95,7 @@ export const logoutUser = async (req, res) => {
     const token =
       req.cookies?.['x-auth-token'] || req.headers.authorization?.split(' ')[1];
     await blackListTokenModel.create({ token });
-    return res.status(200).json({ message: 'Logout successful' });
+    return res.status(200).json({ message: 'Logout successful' }); 
   } catch (error) {
     return res
       .status(500)

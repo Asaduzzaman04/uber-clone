@@ -2,8 +2,9 @@
 import captainModel from './../models/captain.model.js';
 import { createCaptain } from '../Services/Captain.services.js';
 import { validationResult } from 'express-validator';
+import blackListTokenModel from '../models/blackListToken.model.js';
 
-// Create a Captain
+// Create a Captain register
 export const registerCaptain = async (req, res) => {
   try {
     // Validate request
@@ -45,6 +46,62 @@ export const registerCaptain = async (req, res) => {
     //generate token
     const token = captain.generateAuthToken();
     return res.status(201).json({ captain, token });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+// create a Captain login
+export const loginCaptain = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    //check if captain exists
+    const captain = await captainModel.findOne({ email });
+    if (!captain) {
+      return res.status(404).json({ message: 'Captain not found' });
+    }
+    //check if password is correct
+    const isMatch = await captainModel.comparePassword(password);
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+    //generate token
+    const token = captain.generateAuthToken();
+    res.cookie('x-auth-token', token);
+    return res.status(200).json({ captain, token });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+// Get Captain Profile
+export const getCaptainProfile = async (req, res) => {
+  try {
+    const { captain } = req;
+    if (!captain) {
+      return res.status(404).json({ message: 'Captain not found' });
+    }
+    return res.status(200).json({ captain: captain });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+//create a Captain logout
+export const logoutCaptain = async (req, res) => {
+  try {
+    //clear cookie
+    res.clearCookie('x-auth-token');
+    //get token from header or cookie
+    const token =
+      req.cookies?.['x-auth-token'] ||
+      req.headers?.authorization?.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+    //blacklist token
+    await blackListTokenModel.create({ token });
+    return res.status(200).json({ message: 'Captain logged out' });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

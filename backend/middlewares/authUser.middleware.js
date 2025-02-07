@@ -1,3 +1,4 @@
+//des: this file will contain the middleware to authenticate the user
 import blackListTokenModel from '../models/blackListToken.model.js';
 import userModel from '../models/user.model.js';
 import jwt from 'jsonwebtoken';
@@ -18,7 +19,7 @@ export const authUser = async (req, res, next) => {
   }
   try {
     // Verify JWT token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);z
     if (!decoded) {
       return res.status(401).json({ message: 'Invalid token' });
     }

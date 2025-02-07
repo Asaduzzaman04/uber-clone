@@ -1,12 +1,18 @@
 // dependencies
 import express from 'express';
 import { body } from 'express-validator';
-import { registerCaptain } from '../Controllers/Captain.controllers.js';
+import {
+  getCaptainProfile,
+  loginCaptain,
+  logoutCaptain,
+  registerCaptain
+} from '../Controllers/Captain.controllers.js';
+import { authCaptain } from '../middlewares/authCaptain.middleware.js';
 
 //express router
 const CaptainRouter = express.Router();
 
-//register captain route
+//register captain route gose here
 
 CaptainRouter.post(
   '/register',
@@ -76,4 +82,23 @@ CaptainRouter.post(
 
   registerCaptain
 );
+
+//login captain route goes here
+CaptainRouter.post(
+  '/login',
+  [
+    body('email').isEmail().withMessage('Please enter a valid email'),
+    body('password')
+      .isLength({ min: 6 })
+      .withMessage('Password must be at least 6 characters long')
+  ],
+  loginCaptain
+);
+
+// Get captain profile with authentication middleware
+CaptainRouter.get('/profile', authCaptain, getCaptainProfile);
+// logout route goes here
+CaptainRouter.post('/logout',authCaptain, logoutCaptain);
+
+//export router to initialize it in the app
 export default CaptainRouter;
