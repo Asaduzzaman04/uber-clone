@@ -1,3 +1,4 @@
+
 import React from "react";
 import Image from "next/image";
 import logo from "@/public/assets/uber_icon.png";
@@ -15,13 +16,13 @@ const Navbar = () => {
           <Image src={logo} alt="logo" width={100} height={100} />
         </Link>
         {/* links */}
-        <ul className="flex text-xl font-semibold gap-10">
+        <div className="flex text-xl font-semibold gap-10">
           {navigation && navigation.length > 0
             ? navigation?.map((item) => (
                 <Navlinks data={item} key={item.index} />
               ))
             : null}
-        </ul>
+        </div>
       </nav>
       {/* right side and other activity goes here */}
       <div className="flex items-center gap-3 pr-4">

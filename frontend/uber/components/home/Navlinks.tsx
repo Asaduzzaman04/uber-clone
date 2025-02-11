@@ -21,12 +21,13 @@ type links = {
 
 const Navlinks: React.FC<NavlinksProps> = ({ data }) => {
   return (
+    <>
     <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem>
+      <NavigationMenuItem>
+        <NavigationMenuLink>
           <NavigationMenuTrigger>{data.name}</NavigationMenuTrigger>
           <NavigationMenuContent className="w-full border-2 ">
-            <NavigationMenuLink>
+            <NavigationMenuList>
               <div className="grid grid-cols-3 justify-center items-center gap-7">
                 {data && data.dropdown && data.dropdown.length > 0
                   ? data.dropdown.map((item: links) => {
@@ -34,11 +35,12 @@ const Navlinks: React.FC<NavlinksProps> = ({ data }) => {
                     })
                   : null}
               </div>
-            </NavigationMenuLink>
+            </NavigationMenuList>
           </NavigationMenuContent>
-        </NavigationMenuItem>
-      </NavigationMenuList>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
     </NavigationMenu>
+    </>
   );
 };
 
