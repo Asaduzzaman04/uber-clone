@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+.home_background {
+  background-image: url('./assets/Home_traffic_image.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
