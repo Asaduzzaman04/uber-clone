@@ -12,8 +12,6 @@ const Router = () => {
           {/* Child Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/select-role" element={<Role />} />
-          <Route path="/select-role" element={<Role />} />
-          <Route path="/select-role" element={<Role />} />
         </Route>
       </Routes>
     </BrowserRouter>
