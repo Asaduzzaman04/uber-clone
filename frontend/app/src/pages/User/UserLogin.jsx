@@ -10,16 +10,17 @@ const UserLogin = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   //   user-login custom hooks
-  const { loginUser, loading, } = useUserLogin();
+  const { loginUser, loading } = useUserLogin();
 
   //handle default sumbit and sent the data to custom userlogin hooks
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await loginUser(formData);
+     loginUser(formData);
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const {name, value} = e.target
+    setFormData({ ...formData, [name]: value });
   };
 
   // Toggle password visibility
@@ -36,6 +37,32 @@ const UserLogin = () => {
   const itemVariants = {
     hidden: { opacity: 0, x: -20 },
     visible: { opacity: 1, x: 0 },
+  };
+
+  // Add loading animation variants
+  const loadingVariants = {
+    start: {
+      scale: 0.95,
+      opacity: 0.8,
+    },
+    end: {
+      scale: 1,
+      opacity: 1,
+    },
+  };
+
+  const loadingCircleVariants = {
+    start: {
+      rotate: 0,
+    },
+    end: {
+      rotate: 360,
+      transition: {
+        duration: 1,
+        repeat: Infinity,
+        ease: "linear",
+      },
+    },
   };
 
   return (
@@ -70,7 +97,7 @@ const UserLogin = () => {
                 Email Address
               </label>
               <input
-                type="email"
+                type="text"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
@@ -129,17 +156,32 @@ const UserLogin = () => {
             </motion.div>
 
             <motion.button
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.99 }}
+              variants={loadingVariants}
+              initial="end"
+              animate={loading ? "start" : "end"}
+              whileHover={{ scale: loading ? 1 : 1.01 }}
+              whileTap={{ scale: loading ? 1 : 0.99 }}
               type="submit"
               disabled={loading}
-              className={`w-full py-3 rounded-lg font-medium transition-all ${
+              className={`w-full py-3 rounded-lg font-medium transition-all relative ${
                 loading
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-black text-white hover:bg-gray-800"
               }`}
             >
-              {loading ? "Logging in..." : "Log In"}
+              {loading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <motion.div
+                    variants={loadingCircleVariants}
+                    initial="start"
+                    animate="end"
+                    className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                  />
+                  <span>Logging in...</span>
+                </div>
+              ) : (
+                "Log In"
+              )}
             </motion.button>
           </form>
 

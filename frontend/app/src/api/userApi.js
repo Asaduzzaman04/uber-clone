@@ -11,3 +11,12 @@ export const userLogin = async (loginData) => {
     },
   });
 };
+
+
+export const userRegister = async (registerData) =>{
+  return await baseUrl.post("/user/register", registerData,{
+    headers : {
+      "Content-Type" : "application/json"
+    }
+  })
+}

@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import { userLogin } from "../api/userApi";
+import { userEmailVerify } from "../utils/UserUtils";
 
 const useUserLogin = () => {
   const [loading, setLoading] = useState(false);
@@ -27,15 +28,15 @@ const useUserLogin = () => {
           return;
         }
 
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        if (!emailRegex.test(formData.email.trim())) {
+     
+        if (userEmailVerify(formData.email)) {
           toast.error("Please enter a valid email address", { id: toastId });
           return;
         }
 
         const response = await userLogin(formData);
 
-        if (response?.data?.success) {
+        if (response?.data && response.status === 200) {
           toast.success("Login successful!", { id: toastId });
           navigate("/"); // Redirect after successful login
         } else {
@@ -43,7 +44,7 @@ const useUserLogin = () => {
           toast.error(response?.message || "Invalid credentials", { id: toastId });
         }
       } catch (err) {
-        console.error("Login error:", err);
+        console.error("Login error:", err.message);
         setError("Something went wrong. Please try again.");
         toast.error("Something went wrong. Please try again.", { id: toastId });
       } finally {
