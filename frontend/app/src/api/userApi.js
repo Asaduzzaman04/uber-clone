@@ -5,18 +5,19 @@ const baseUrl = axios.create({
 });
 
 export const userLogin = async (loginData) => {
-  return await baseUrl.post("/user/login", loginData, {
+  const response = await baseUrl.post("/user/login", loginData, {
     headers: {
       "Content-Type": "application/json",
     },
   });
+  return response;
 };
 
-
-export const userRegister = async (registerData) =>{
-  return await baseUrl.post("/user/register", registerData,{
-    headers : {
-      "Content-Type" : "application/json"
-    }
-  })
-}
+export const userRegister = async (registerData) => {
+  const response = await baseUrl.post("/user/register", registerData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return response;
+};

@@ -52,6 +52,14 @@ const UserSignUp = () => {
     try {
       // Call the registerUser function to send data to the backend
       await registerUser(formData);
+      setFormData({
+        fullname: {
+          firstname: "",
+          lastname: "",
+        },
+        email: "",
+        password: "",
+      });
     } catch (error) {
       console.error("Registration error:", error);
     }
@@ -176,7 +184,7 @@ const UserSignUp = () => {
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
               type="submit"
-              disabled = {loading}
+              disabled={loading}
               className={`w-full py-3 rounded-lg font-medium transition-all ${
                 loading
                   ? "bg-gray-400 cursor-not-allowed"

@@ -1,47 +1,50 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
-import { userLogin } from "../api/userApi";
+import { loginCaptain } from "../api/captainApi";
 import { EmailVerify } from "../utils/UserUtils";
 
-const useUserLogin = () => {
+const UseCaptainLogin = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const loginUser = useCallback(
-    async (formData) => {
+  const captainLogin = useCallback(
+    async (loginData) => {
       setLoading(true);
       setError(null);
 
-      // Show loading toast and store its ID to dismiss later
       const toastId = toast.loading("Logging in...");
 
       try {
-        if (!formData.email || !formData.password) {
+        // Validate login data
+        if (!loginData.email || !loginData.password) {
           toast.error("Please fill in all fields", { id: toastId });
           return;
         }
-
-        if (formData.password.trim().length < 6) {
-          toast.error("Password must be at least 6 characters", { id: toastId });
+        if (EmailVerify(loginData.email)) {
+          toast.error("Enter a valid email address", { id: toastId });
           return;
         }
 
-     
-        if (EmailVerify(formData.email)) {
-          toast.error("Please enter a valid email address", { id: toastId });
+        if (loginData.password.trim().length < 6) {
+          toast.error("Password must be at least 6 characters", {
+            id: toastId,
+          });
           return;
         }
 
-        const response = await userLogin(formData);
+        // Make API call to login
+        const response = await loginCaptain(loginData);
 
         if (response?.data && response.status === 200) {
           toast.success("Login successful!", { id: toastId });
-          navigate("/"); // Redirect after successful login
+          navigate("/dashboard"); // Redirect to dashboard or desired page
         } else {
           setError(response?.message || "Login failed");
-          toast.error(response?.message || "Invalid credentials", { id: toastId });
+          toast.error(response?.message || "Invalid credentials", {
+            id: toastId,
+          });
         }
       } catch (err) {
         console.error("Login error:", err.message);
@@ -54,7 +57,7 @@ const useUserLogin = () => {
     [navigate]
   );
 
-  return { loginUser, loading, error };
+  return { captainLogin, loading, error };
 };
 
-export default useUserLogin;
+export default UseCaptainLogin;

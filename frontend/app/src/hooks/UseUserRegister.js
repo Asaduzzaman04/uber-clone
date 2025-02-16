@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
-import { userEmailVerify } from "../utils/UserUtils";
+import { EmailVerify } from "../utils/UserUtils";
 import { userRegister } from "../api/userApi";
 
 const UseUserRegister = () => {
@@ -27,17 +27,16 @@ const UseUserRegister = () => {
           return;
         }
 
-        if (userEmailVerify(registerUserData.email)) {
+        if (EmailVerify(registerUserData.email)) {
           toast.error("Enter a valid email address", { id: toastId });
         }
         const response = await userRegister(registerUserData);
         if (response?.data && response.status === 201) {
           toast.success("User Created", { id: toastId });
-        } else {
-          throw new Error("Cannnot Register new User");
         }
       } catch (err) {
-        toast.error(err.massage, { id: toastId });
+        console.log(err)
+        toast.error("There was an error to sign up", { id: toastId });
         setError("Something went wrong. Please try again.");
       } finally {
         setLoading(false);
